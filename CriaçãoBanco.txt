@@ -1,0 +1,114 @@
+CREATE TABLE `aula` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `turmaid` bigint NOT NULL,
+  `professoresid` bigint NOT NULL,
+  `diasemana` varchar(50) NOT NULL,
+  `horarioinicio` time NOT NULL,
+  `horariofim` time NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `professoresid` (`professoresid`),
+  KEY `FKggv26r4sf65u7vpamg9ikjsvn` (`turmaid`),
+  CONSTRAINT `aula_ibfk_2` FOREIGN KEY (`professoresid`) REFERENCES `professores` (`id`),
+  CONSTRAINT `FKggv26r4sf65u7vpamg9ikjsvn` FOREIGN KEY (`turmaid`) REFERENCES `turmas` (`id`)
+);
+
+
+CREATE TABLE `avisos` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(255) DEFAULT NULL,
+  `professoresid` bigint DEFAULT NULL,
+  `nomedescricao` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `professoresid` (`professoresid`),
+  CONSTRAINT `avisos_ibfk_1` FOREIGN KEY (`professoresid`) REFERENCES `professores` (`id`)
+);
+
+
+CREATE TABLE `coordenadores` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `idusuario` bigint NOT NULL,
+  `departamento` varchar(50) DEFAULT NULL,
+  `cargo` varchar(50) DEFAULT NULL,
+  `datainiciocoordenacao` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idusuario` (`idusuario`),
+  CONSTRAINT `coordenadores_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `usuarios` (`id`)
+);
+
+CREATE TABLE `professores` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `idusuario` bigint NOT NULL,
+  `formacaoacademica` varchar(50) DEFAULT NULL,
+  `datacontratacao` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idusuario` (`idusuario`),
+  CONSTRAINT `professores_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `usuarios` (`id`)
+);
+
+
+CREATE TABLE `turmas` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `nometurma` varchar(255) NOT NULL,
+  `periodoid` bigint NOT NULL,
+  `nivelano` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `periodoid` (`periodoid`),
+  CONSTRAINT `turmas_ibfk_1` FOREIGN KEY (`periodoid`) REFERENCES `periodos` (`id`)
+);
+
+CREATE TABLE `usuarios` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `senha` varchar(20) NOT NULL,
+  `tipousuario` varchar(10) DEFAULT NULL,
+  `enderecoid` bigint DEFAULT NULL,
+  `Celular` varchar(15) NOT NULL,
+  `datanascimento` date NOT NULL,
+  `genero` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK692drvoxx3qx85g98n93k7ttj` (`enderecoid`),
+  CONSTRAINT `FK692drvoxx3qx85g98n93k7ttj` FOREIGN KEY (`enderecoid`) REFERENCES `enderecos` (`id`)
+);
+
+
+CREATE TABLE `enderecos` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `cidade` varchar(100) DEFAULT NULL,
+  `uf` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `periodos` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `nomeperiodo` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+
+CREATE TABLE `materias` (
+  `id` bigint NOT NULL,
+  `nomemateria` varchar(50) DEFAULT NULL,
+  `descricaomateria` text,
+  `professorid` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `professorid` (`professorid`),
+  CONSTRAINT `materias_ibfk_1` FOREIGN KEY (`professorid`) REFERENCES `professores` (`id`)
+);
+
+CREATE TABLE `disponibilidade` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `professoresid` bigint DEFAULT NULL,
+  `diasemana` varchar(10) DEFAULT NULL,
+  `horarioinicio` time DEFAULT NULL,
+  `horariofim` time DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `professoresid` (`professoresid`),
+  CONSTRAINT `disponibilidade_ibfk_1` FOREIGN KEY (`professoresid`) REFERENCES `professores` (`id`)
+);
+
+
+
+
+
+
